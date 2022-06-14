@@ -10,7 +10,6 @@ typedef struct No No;
 typedef struct Fila Fila;
 
 struct No{
-    int a;
     No *prox;
 };
 
@@ -20,7 +19,7 @@ struct Fila{
 };
 
 /* NO */
-No* criaNo(int a);
+No* criaNo();
 void destroiNo(No *n);
 
 /* FILA */

@@ -1,9 +1,8 @@
 #include "fila.h"
 
 /* NO */
-No* criaNo(int a){
+No* criaNo(){
     No *n = malloc(sizeof(No));
-    n->a = a;
     n->prox = NULL;
     return n;
 }
@@ -51,10 +50,8 @@ void destroiFila(Fila *f){
 
     while (f->ini != f->fim){
         No *n = removeNo(f);
-        printf("removendo id: %d\n", n->a);
         destroiNo(n);
-    }
-    
+    }   
 
     destroiNo(f->ini);
     free(f);
@@ -65,7 +62,7 @@ void imprimeFila(Fila *f){
     printf("Ini -> ");
 
     while(n != NULL){
-        printf("%d -> ", n->a);
+    /*    printf("%d -> ", n->a)*/
         n = n->prox;
     }    
     printf("fim\n");
