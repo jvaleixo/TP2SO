@@ -17,6 +17,7 @@ Fila* criaFila(){
     f->ini = criaNo(-1);
     f->ini->prox = NULL;
     f->fim = f->ini;
+    return f;
 }
 
 void insereNo(Fila *f, No *n){
