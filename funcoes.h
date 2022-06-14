@@ -6,4 +6,5 @@
 
 FILE* abrirArquivo(char* nome);
 int fecharArquivo(FILE *arquivo);
+int enderecoPagina(int tamPag);
 #endif

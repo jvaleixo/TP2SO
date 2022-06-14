@@ -19,3 +19,16 @@ int fecharArquivo(FILE *arquivo){
     printf("Erro ao fechar o arquivo\n");
     return 0;
 }
+
+int enderecoPagina(int tamPag){
+    unsigned s, tmp;
+    /* Derivar o valor de s: */
+    tmp = tamPag;
+    s = 0;
+    while (tmp>1) {
+        tmp = tmp>>1;
+        s++;
+    }
+
+    return s;
+}

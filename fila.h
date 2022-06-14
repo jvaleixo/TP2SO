@@ -10,6 +10,7 @@ typedef struct No No;
 typedef struct Fila Fila;
 
 struct No{
+    /* colocar os atribultos*/
     No *prox;
 };
 

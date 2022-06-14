@@ -20,9 +20,12 @@ int main(int argc, char *argv[]){
     int nPag = tamMem/tamPag;
     int nPagR = 0;
     int nPagW = 0;
+    int s;
     unsigned int addr;
     char rw;
 
+    s = enderecoPagina(tamPag);
+    printf("s: %d\n", s);
     arquivo = abrirArquivo(argv[2]);
     while (fscanf(arquivo, "%x %c", &addr, &rw) != EOF){
         
