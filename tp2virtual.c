@@ -7,7 +7,7 @@
 int main(int argc, char *argv[]){
 
     FILE *arquivo = NULL;
-        argv[1] = "lru";
+        argv[1] = "nru";
         argv[2] = "compilador.log";
         argv[3] = "4";
         argv[4] = "128";
@@ -30,7 +30,8 @@ int main(int argc, char *argv[]){
     printf("s: %d\n", s);
     arquivo = abrirArquivo(argv[2]);
     while (fscanf(arquivo, "%s %c", &addr, &rw) != EOF){
-        hextobinary(addr);
+        const char *bin = hextobinary(addr);
+        /*printf("endereco em bin: %s\n",bin);*/
         /*Define o numero de paginas lidas e escritas*/
         if(rw == 'R')
             nPagR++;
@@ -40,12 +41,13 @@ int main(int argc, char *argv[]){
         if (argc == 5){
             if(strcmp(argv[1], "lru") == 0){
                 /*Logica lru*/
-                printf("alo!\n");
+                printf("lru!\n");
             }else if(strcmp(argv[1], "nru") == 0){
                 /*Logica nru*/
-                
+                printf("nru!\n");
             }else if(strcmp(argv[1], "segunda_chance") == 0){
                 /*Logica segunda_chance*/
+                printf("segunda_chance!\n");
             }else{
                 printf("digite um comando valido!\n");
             }

@@ -8,5 +8,5 @@
 FILE* abrirArquivo(char* nome);
 int fecharArquivo(FILE *arquivo);
 int enderecoPagina(int tamPag);
-void hextobinary(char* addr);
+const char* hextobinary(char* addr);
 #endif

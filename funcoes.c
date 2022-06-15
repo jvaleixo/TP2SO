@@ -34,9 +34,9 @@ int enderecoPagina(int tamPag){
 }
 
 
-void hextobinary(char* addr){
+const char* hextobinary(char* addr){
     /*char hex[MAX+1];*/
-    char bin[MAX*4];
+    static char bin[MAX*4];
     strcpy(bin,"");
     int count;
     count = 0;
@@ -98,5 +98,6 @@ void hextobinary(char* addr){
         count++;
     }
     printf("valor hex: %s\n", addr);
-    printf("valor bin: %s\n",bin);
+    printf("%s\n",bin);
+    return bin;
 }
