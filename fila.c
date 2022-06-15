@@ -14,13 +14,13 @@ void destroiNo(No *n){
 /* FILA */
 Fila* criaFila(){
     Fila *f = (Fila*)malloc(sizeof(Fila));
-    f->ini = criaNo(-1);
+    f->ini = criaNo();
     f->ini->prox = NULL;
     f->fim = f->ini;
     return f;
 }
 
-void insereNo(Fila *f, No *n){
+void insereFila(Fila *f, No *n){
     if(f->ini == f->fim){
         f->ini->prox = n;
         f->fim = n;
@@ -30,7 +30,7 @@ void insereNo(Fila *f, No *n){
     }
 }
 
-No* removeNo(Fila *f){
+No* removeFila(Fila *f){
     if (f->ini == f->fim){
         return NULL;
     }else if (f->ini->prox == f->fim){
@@ -50,7 +50,7 @@ No* removeNo(Fila *f){
 void destroiFila(Fila *f){
 
     while (f->ini != f->fim){
-        No *n = removeNo(f);
+        No *n = removeFila(f);
         destroiNo(n);
     }   
 

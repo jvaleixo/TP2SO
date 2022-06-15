@@ -22,7 +22,7 @@ int fecharArquivo(FILE *arquivo){
 
 int enderecoPagina(int tamPag){
     unsigned s, tmp;
-    /* Derivar o valor de s: */
+    /* Derivando o valor de s: */
     tmp = tamPag;
     s = 0;
     while (tmp>1) {

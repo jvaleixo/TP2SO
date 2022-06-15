@@ -25,8 +25,8 @@ void destroiNo(No *n);
 
 /* FILA */
 Fila* criaFila();
-void insereNo(Fila *f, No *n);
-No* removeNo(Fila *f);
+void insereFila(Fila *f, No *n);
+No* removeFila(Fila *f);
 void destroiFila(Fila *f);
 void imprimeFila(Fila *f);
 
