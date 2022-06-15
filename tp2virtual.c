@@ -6,29 +6,31 @@
 
 int main(int argc, char *argv[]){
 
-    /*
-        argv[1] = tipo de algoritimo de reposição
-        argv[2] = nome do arquivo com os endereçõs de memoria e tipos de comandos
-        argv[3] = tamanho de cada pagina na memoria
-        argv[4] = tamanho da memoria fisica disponivel
-        recebendo variaveis e definindo o numero de paginas.
-    */
-
     FILE *arquivo = NULL;
+        argv[1] = "lru";
+        argv[2] = "compilador.log";
+        argv[3] = "4";
+        argv[4] = "128";
+        /*recebendo variaveis e definindo o numero de paginas.*/
+    
+
+    /*FILE *arquivo = NULL;*/
     int tamPag = atoi(argv[3]);
     int tamMem = atoi(argv[4]);
     int nPag = tamMem/tamPag;
+    printf("npag: %d\n", nPag);
     int nPagR = 0;
     int nPagW = 0;
     int s;
-    unsigned int addr;
+    char addr[MAX+1];
     char rw;
+    argc = 5;
 
     s = enderecoPagina(tamPag);
     printf("s: %d\n", s);
     arquivo = abrirArquivo(argv[2]);
-    while (fscanf(arquivo, "%x %c", &addr, &rw) != EOF){
-        
+    while (fscanf(arquivo, "%s %c", &addr, &rw) != EOF){
+        hextobinary(addr);
         /*Define o numero de paginas lidas e escritas*/
         if(rw == 'R')
             nPagR++;
@@ -38,7 +40,7 @@ int main(int argc, char *argv[]){
         if (argc == 5){
             if(strcmp(argv[1], "lru") == 0){
                 /*Logica lru*/
- 
+                printf("alo!\n");
             }else if(strcmp(argv[1], "nru") == 0){
                 /*Logica nru*/
                 
