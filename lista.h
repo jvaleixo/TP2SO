@@ -6,31 +6,31 @@
 #ifndef _H_LISTA
 #define _H_LISTA
 
-typedef struct No No;
+typedef struct NoL NoL;
 typedef struct Lista Lista;
 
-struct No{
+struct NoL{
     /* colocar os atribultos*/
-    No *prox;
+    int id;
+    NoL *prox;
 };
 
 struct Lista{
-    No *cabeca;
-    No *pe;
+    NoL *cabeca;
+    NoL *pe;
     int tam;
 };
 
-/* NO */
-No* criaNo();
-void destroiNo(No *n);
+/* NOL */
+NoL* criaNoL(int id);
+void destroiNoL(NoL *n);
 
 /* Lista */
 Lista* criaLista();
-void insereLista(Lista *l, No *n);
-No* removeListaInicio(Lista *l);
+void insereLista(Lista *l, NoL *n);
+NoL* removeListaInicio(Lista *l);
 int ehVazia(Lista *l);
 void destroiLista(Lista *l);
 void imprimeLista(Lista *l);
 
 #endif
-

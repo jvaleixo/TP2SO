@@ -1,6 +1,6 @@
 #makefile
 
-all: tp2virtual.o funcoes.o fila.o
+all: tp2virtual.o funcoes.o fila.o lista.o
 	gcc tp2virtual.o funcoes.o -g -W -Wall -ansi -pedantic -o tp2virtual 
 
 tp2virtual.o: tp2virtual.c
@@ -11,6 +11,9 @@ funcoes.o: funcoes.c funcoes.h
 
 fila.o: fila.c fila.h
 	gcc -c fila.c -g -W -Wall -ansi -pedantic
+
+lista.o: lista.c lista.h
+	gcc -c lista.c -g -W -Wall -ansi -pedantic
 
 clean:
 	rm -rf *.o *~ tp2virtual
