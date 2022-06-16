@@ -6,27 +6,27 @@
 #ifndef _H_FILA
 #define _H_FILA
 
-typedef struct No No;
+typedef struct NoF NoF;
 typedef struct Fila Fila;
 
-struct No{
+struct NoF{
     /* colocar os atribultos*/
-    No *prox;
+    NoF *prox;
 };
 
 struct Fila{
-    No *ini;
-    No *fim;
+    NoF *ini;
+    NoF *fim;
 };
 
-/* NO */
-No* criaNo();
-void destroiNo(No *n);
+/* NOF */
+NoF* criaNoF();
+void destroiNoF(NoF *n);
 
 /* FILA */
 Fila* criaFila();
-void insereFila(Fila *f, No *n);
-No* removeFila(Fila *f);
+void insereFila(Fila *f, NoF *n);
+NoF* removeFila(Fila *f);
 void destroiFila(Fila *f);
 void imprimeFila(Fila *f);
 

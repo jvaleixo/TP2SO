@@ -1,26 +1,26 @@
 #include "fila.h"
 
-/* NO */
-No* criaNo(){
-    No *n = malloc(sizeof(No));
+/* NOF */
+NoF* criaNoF(){
+    NoF *n = malloc(sizeof(NoF));
     n->prox = NULL;
     return n;
 }
 
-void destroiNo(No *n){
+void destroiNoF(NoF *n){
     free(n);
 }
 
 /* FILA */
 Fila* criaFila(){
     Fila *f = (Fila*)malloc(sizeof(Fila));
-    f->ini = criaNo();
+    f->ini = criaNoF();
     f->ini->prox = NULL;
     f->fim = f->ini;
     return f;
 }
 
-void insereFila(Fila *f, No *n){
+void insereFila(Fila *f, NoF *n){
     if(f->ini == f->fim){
         f->ini->prox = n;
         f->fim = n;
@@ -30,17 +30,17 @@ void insereFila(Fila *f, No *n){
     }
 }
 
-No* removeFila(Fila *f){
+NoF* removeFila(Fila *f){
     if (f->ini == f->fim){
         return NULL;
     }else if (f->ini->prox == f->fim){
-        No *n = f->ini->prox;
+        NoF *n = f->ini->prox;
         n->prox = NULL;
         f->ini->prox = NULL;
         f->fim = f->ini;
         return n;
     }else{
-        No *n = f->ini->prox;
+        NoF *n = f->ini->prox;
         f->ini->prox = n->prox;
         n->prox = NULL;
         return n;
@@ -50,16 +50,16 @@ No* removeFila(Fila *f){
 void destroiFila(Fila *f){
 
     while (f->ini != f->fim){
-        No *n = removeFila(f);
-        destroiNo(n);
+        NoF *n = removeFila(f);
+        destroiNoF(n);
     }   
 
-    destroiNo(f->ini);
+    destroiNoF(f->ini);
     free(f);
 }
 
 void imprimeFila(Fila *f){
-    No *n = f->ini->prox;
+    NoF *n = f->ini->prox;
     printf("Ini -> ");
 
     while(n != NULL){

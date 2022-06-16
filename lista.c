@@ -1,27 +1,28 @@
 #include "lista.h"
 
-/* NO */
-No* criaNo(){
-    No *n = (No*)malloc(sizeof(No));
+/* NOL */
+NoL* criaNoL(int id){
+    NoL *n = (NoL*)malloc(sizeof(NoL));
     n->prox = NULL;
+    n->id = id;
 
     return n;
 }
 
-void destroiNo(No *n){
+void destroiNoL(NoL *n){
     free(n);
 }
 
 /* Lista */
 Lista* criaLista(){
     Lista *l = (Lista*)malloc(sizeof(Lista));
-    l->cabeca = criaNo();
+    l->cabeca = criaNoL(-1);
     l->pe = l->cabeca;
     l->tam = 0;
     return l;
 }
 
-void insereLista(Lista *l, No *n){
+void insereLista(Lista *l, NoL *n){
     if (ehVazia(l)){
         l->cabeca->prox = n;
         l->pe = n;
@@ -36,11 +37,13 @@ void insereLista(Lista *l, No *n){
     
 }
 
-No* removeListaInicio(Lista *l){
+NoL* removeListaInicio(Lista *l){
+    NoL *n;
+
     if(l->tam == 1){
         l->pe = l->cabeca;
     }
-    No *n = l->cabeca->prox;
+    n = l->cabeca->prox;
     l->cabeca->prox = n->prox;
     n->prox = NULL;
     l->tam--;
@@ -53,22 +56,22 @@ int ehVazia(Lista *l){
 
 void destroiLista(Lista *l){
     while (l->tam > 0){
-        No *n = removeListaInicio(l);
-        destroiNo(n);
+        NoL *n = removeListaInicio(l);
+        destroiNoL(n);
     }
     free(l->cabeca);
     free(l);
 }
 
 void imprimeLista(Lista *l){
-    No *n = l->cabeca->prox;
+    NoL *n = l->cabeca->prox;
+    int i = 0;
     printf("cabeca -> ");
 
-    while (n != NULL){
-        /*printf("%d ->", n.a);*/
+    while (l->tam > i++){
+        printf("%d -> ", n->id);
         n = n->prox;
     }
 
-    printf(" pe");
-
+    printf("pe\n");
 }
