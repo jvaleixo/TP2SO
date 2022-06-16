@@ -15,6 +15,5 @@ FILE* abrirArquivo(char* nome);
 int fecharArquivo(FILE *arquivo);
 int enderecoPagina(int tamPag);
 const char* hextobinary(char* addr);
-segunda_chance(int nPag, Frame Frames[]);
 
 #endif

@@ -36,9 +36,9 @@ int enderecoPagina(int tamPag){
 
 const char* hextobinary(char* addr){
     /*char hex[MAX+1];*/
+    int count;
     static char bin[TAMANHO*4];
     strcpy(bin,"");
-    int count;
     count = 0;
     /*strcpy(hex,addr);*/
     /*printf("addr: %s\n",addr);*/
@@ -100,9 +100,4 @@ const char* hextobinary(char* addr){
     /*printf("valor hex: %s\n", addr);
     printf("%s\n",bin);*/
     return bin;
-}
-
-
-segunda_chance(int nPag, Frame Frames[]){
-    
 }

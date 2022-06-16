@@ -7,13 +7,13 @@
 int main(int argc, char *argv[]){
 
     FILE *arquivo = NULL;
-        argv[1] = "segunda_chance";
-        argv[2] = "teste.log";
-        argv[3] = "4";
-        argv[4] = "128";
-        argv[5] = "debug";
-        /*recebendo variaveis e definindo o numero de paginas.*/
-
+    /*
+    argv[1] = tipo de paginação;
+    argv[2] = nome do arquivo;
+    argv[3] = tamPag;
+    argv[4] = tamMem;
+    argv[5] = debug;
+    recebendo variaveis e definindo o numero de paginas.*/
     int tamPag = atoi(argv[3])*1024;
     int tamMem = atoi(argv[4])*1024;
     int nPag = tamMem/tamPag;
@@ -23,24 +23,24 @@ int main(int argc, char *argv[]){
     int s;
     char addr[TAMANHO+1];
     char rw;
-    argc = 5;
-
     s = enderecoPagina(tamPag);
     arquivo = abrirArquivo(argv[2]);
-    while (fscanf(arquivo, "%s %c", &addr, &rw) != EOF){
+
+    while (fscanf(arquivo, "%s %c", addr, &rw) != EOF){
         
         const char *bin = hextobinary(addr);
         long int binint = strtoll(bin,NULL,2);
         long int page = binint >> s;
 
         /*printfs para verificar o funcionamento do código*/
-        if(argc == 6 && argv[5] == "debug"){
+        /*Quando argc == 6 significa que ha 5 parametros, ou seja, argv[6] e == debug*/
+        if((argc == 6) && (strcmp(argv[5], "debug") == 0)){
             printf("s: %d\n", s);
             printf("tampag: %d\n",tamPag);
             printf("npag: %d\n", nPag); 
             printf("endereco em bin: %s\n",bin);
-            printf("addr int: %lu\naddr: %s\n",binint,addr);
-            printf("page %lu\n",page);
+            printf("addr int: %lu\naddr: %s\n", binint, addr);
+            printf("page %lu\n\n",page);
         }
         
         /*Define o numero de paginas lidas e escritas*/
@@ -49,17 +49,17 @@ int main(int argc, char *argv[]){
         if(rw == 'W')
             nPagW++;
         
-        if (argc == 5 || argc == 6){
+        if (argc >= 5){
             if(strcmp(argv[1], "lru") == 0){
-                /*Logica lru*/
-                printf("lru!\n");
+                /*Logica lru
+                printf("lru!\n");*/
             }else if(strcmp(argv[1], "nru") == 0){
-                /*Logica nru*/
-                printf("nru!\n");
+                /*Logica nru
+                printf("nru!\n");*/
             }else if(strcmp(argv[1], "segunda_chance") == 0){
-                /*Logica segunda_chance*/
+                /*Logica segunda_chance
                 printf("segunda_chance!\n");
-                segunda_chance();   
+                segunda_chance();*/   
             }else{
                 printf("digite um comando valido!\n");
             }
