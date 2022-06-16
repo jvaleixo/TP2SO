@@ -10,7 +10,7 @@ typedef struct NoL NoL;
 typedef struct Lista Lista;
 
 struct NoL{
-    /* colocar os atribultos*/
+    /* colocar os atributos*/
     int id;
     NoL *prox;
 };

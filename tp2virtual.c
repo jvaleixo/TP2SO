@@ -7,38 +7,49 @@
 int main(int argc, char *argv[]){
 
     FILE *arquivo = NULL;
-        argv[1] = "nru";
-        argv[2] = "compilador.log";
+        argv[1] = "segunda_chance";
+        argv[2] = "teste.log";
         argv[3] = "4";
         argv[4] = "128";
+        argv[5] = "debug";
         /*recebendo variaveis e definindo o numero de paginas.*/
-    
 
-    /*FILE *arquivo = NULL;*/
-    int tamPag = atoi(argv[3]);
-    int tamMem = atoi(argv[4]);
+    int tamPag = atoi(argv[3])*1024;
+    int tamMem = atoi(argv[4])*1024;
     int nPag = tamMem/tamPag;
-    printf("npag: %d\n", nPag);
     int nPagR = 0;
     int nPagW = 0;
+    int pFault = 0;
     int s;
-    char addr[MAX+1];
+    char addr[TAMANHO+1];
     char rw;
     argc = 5;
 
     s = enderecoPagina(tamPag);
-    printf("s: %d\n", s);
     arquivo = abrirArquivo(argv[2]);
     while (fscanf(arquivo, "%s %c", &addr, &rw) != EOF){
+        
         const char *bin = hextobinary(addr);
-        /*printf("endereco em bin: %s\n",bin);*/
+        long int binint = strtoll(bin,NULL,2);
+        long int page = binint >> s;
+
+        /*printfs para verificar o funcionamento do código*/
+        if(argc == 6 && argv[5] == "debug"){
+            printf("s: %d\n", s);
+            printf("tampag: %d\n",tamPag);
+            printf("npag: %d\n", nPag); 
+            printf("endereco em bin: %s\n",bin);
+            printf("addr int: %lu\naddr: %s\n",binint,addr);
+            printf("page %lu\n",page);
+        }
+        
         /*Define o numero de paginas lidas e escritas*/
         if(rw == 'R')
             nPagR++;
         if(rw == 'W')
             nPagW++;
         
-        if (argc == 5){
+        if (argc == 5 || argc == 6){
             if(strcmp(argv[1], "lru") == 0){
                 /*Logica lru*/
                 printf("lru!\n");
@@ -48,6 +59,7 @@ int main(int argc, char *argv[]){
             }else if(strcmp(argv[1], "segunda_chance") == 0){
                 /*Logica segunda_chance*/
                 printf("segunda_chance!\n");
+                segunda_chance();   
             }else{
                 printf("digite um comando valido!\n");
             }
@@ -60,10 +72,11 @@ int main(int argc, char *argv[]){
 
     printf("Executando o simulador...\n");
     printf("Arquivo de entrada: %s\n", argv[2]);
-    printf("Tamanho da memoria: %d KB\n", tamMem);
-    printf("Tamanho das paginas: %d KB\n", tamPag);
+    printf("Tamanho da memoria: %d KB\n", tamMem/1024);
+    printf("Tamanho das paginas: %d KB\n", tamPag/1024);
     printf("Tecnica de reposição: %s\n", argv[1]);
     printf("Paginas lidas: %d\n", nPagR);
     printf("Paginas escritas: %d\n", nPagW);
+    printf("Page faults: %d\n",pFault);
     return 1;
 }

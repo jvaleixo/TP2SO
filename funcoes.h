@@ -1,12 +1,20 @@
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <string.h>
-#define MAX 8
+#define TAMANHO 8
 #ifndef _H_FUNCOES
 #define _H_FUNCOES
+
+typedef struct TFrame{
+    int page;
+    int r_b;
+}Frame;
+
 
 FILE* abrirArquivo(char* nome);
 int fecharArquivo(FILE *arquivo);
 int enderecoPagina(int tamPag);
 const char* hextobinary(char* addr);
+segunda_chance(int nPag, Frame Frames[]);
+
 #endif
