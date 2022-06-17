@@ -21,7 +21,7 @@ int fecharArquivo(FILE *arquivo){
 }
 
 int enderecoPagina(int tamPag){
-    unsigned s, tmp;
+    unsigned int s, tmp;
     /* Derivando o valor de s: */
     tmp = tamPag;
     s = 0;
@@ -29,19 +29,19 @@ int enderecoPagina(int tamPag){
         tmp = tmp>>1;
         s++;
     }
-
+      
     return s;
 }
 
 
 const char* hextobinary(char* addr){
     /*char hex[MAX+1];*/
-    static char bin[MAX*4];
-    strcpy(bin,"");
     int count;
+    static char bin[TAMANHO*4];
+    strcpy(bin,"");
     count = 0;
     /*strcpy(hex,addr);*/
-    printf("addr: %s\n",addr);
+    /*printf("addr: %s\n",addr);*/
     while(addr[count]){
         switch(addr[count]){
             case '0':
@@ -97,7 +97,7 @@ const char* hextobinary(char* addr){
         }
         count++;
     }
-    printf("valor hex: %s\n", addr);
-    printf("%s\n",bin);
+    /*printf("valor hex: %s\n", addr);
+    printf("%s\n",bin);*/
     return bin;
 }
