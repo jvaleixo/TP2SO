@@ -5,15 +5,16 @@
 #include <string.h>
 
 int main(int argc, char *argv[]){
-
-    FILE *arquivo = NULL;
     /*
-    argv[1] = tipo de paginação;
-    argv[2] = nome do arquivo;
-    argv[3] = tamPag;
-    argv[4] = tamMem;
-    argv[5] = debug;
-    recebendo variaveis e definindo o numero de paginas.*/
+        argv[1] = tipo de paginação;
+        argv[2] = nome do arquivo;
+        argv[3] = tamPag;
+        argv[4] = tamMem;
+        argv[5] = debug;
+    */
+
+    /*recebendo variaveis e definindo o numero de paginas.*/
+    FILE *arquivo = NULL;
     int tamPag = atoi(argv[3])*1024;
     int tamMem = atoi(argv[4])*1024;
     int nPag = tamMem/tamPag;
