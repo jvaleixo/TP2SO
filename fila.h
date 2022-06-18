@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #ifndef _H_FILA
 #define _H_FILA
@@ -11,6 +12,7 @@ typedef struct Fila Fila;
 
 struct NoF{
     /* colocar os atributos*/
+    const char *addr;
     NoF *prox;
 };
 
@@ -20,7 +22,7 @@ struct Fila{
 };
 
 /* NOF */
-NoF* criaNoF();
+NoF* criaNoF(const char* addr);
 void destroiNoF(NoF *n);
 
 /* FILA */
@@ -29,5 +31,5 @@ void insereFila(Fila *f, NoF *n);
 NoF* removeFila(Fila *f);
 void destroiFila(Fila *f);
 void imprimeFila(Fila *f);
-
+NoF* verificaFila(Fila *f, const char *addr);
 #endif

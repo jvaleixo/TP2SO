@@ -3,9 +3,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifndef _H_FILA
-#define _H_FILA
+#ifndef _H_NRU
+#define _H_NRU
 
-segunda_chance(int nPag);
+nru();
 
 #endif

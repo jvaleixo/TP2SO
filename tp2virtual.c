@@ -1,4 +1,6 @@
 #include "funcoes.h"
+#include "fila.h"
+#include "lista.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,7 +28,8 @@ int main(int argc, char *argv[]){
     char rw;
     s = enderecoPagina(tamPag);
     arquivo = abrirArquivo(argv[2]);
-
+    Fila *F;
+    F = criaFila();
     while (fscanf(arquivo, "%s %c", addr, &rw) != EOF){
         
         const char *bin = hextobinary(addr);
@@ -41,7 +44,7 @@ int main(int argc, char *argv[]){
             printf("npag: %d\n", nPag); 
             printf("endereco em bin: %s\n",bin);
             printf("addr int: %lu\naddr: %s\n", binint, addr);
-            printf("page %lu\n\n",page);
+            printf("linha na tabela de pagina fisica %lu\n\n",page);
         }
         
         /*Define o numero de paginas lidas e escritas*/
@@ -60,7 +63,12 @@ int main(int argc, char *argv[]){
             }else if(strcmp(argv[1], "segunda_chance") == 0){
                 /*Logica segunda_chance
                 printf("segunda_chance!\n");
-                segunda_chance();*/   
+                segunda_chance();*/ 
+                /*NoF *n;
+                n = criaNoF(bin);
+                insereFila(F,n);
+                imprimeFila(F);
+                verificaFila(F,bin);*/
             }else{
                 printf("digite um comando valido!\n");
             }

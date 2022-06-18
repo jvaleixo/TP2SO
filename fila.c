@@ -1,8 +1,9 @@
 #include "fila.h"
 
 /* NOF */
-NoF* criaNoF(){
+NoF* criaNoF(const char *addr){
     NoF *n = malloc(sizeof(NoF));
+    n->addr = strdup(addr);
     n->prox = NULL;
     return n;
 }
@@ -14,7 +15,7 @@ void destroiNoF(NoF *n){
 /* FILA */
 Fila* criaFila(){
     Fila *f = (Fila*)malloc(sizeof(Fila));
-    f->ini = criaNoF();
+    f->ini = criaNoF("0");
     f->ini->prox = NULL;
     f->fim = f->ini;
     return f;
@@ -63,8 +64,19 @@ void imprimeFila(Fila *f){
     printf("Ini -> ");
 
     while(n != NULL){
-    /*    printf("%d -> ", n->a)*/
+        printf("%s -> ", n->addr);
         n = n->prox;
     }    
     printf("fim\n");
+}
+
+NoF* verificaFila(Fila *f, const char *addr){
+    NoF* no = f->ini->prox;
+    while(no != f->fim->prox){
+        if(no->addr[0] == addr[0] && no->addr[1] == addr[1] && no->addr[2] == addr[2] && no->addr[3] == addr[3] && no->addr[4] == addr[4]){
+            return no;
+        }
+        no = no->prox;
+    }
+    return no;
 }
