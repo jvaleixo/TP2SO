@@ -75,3 +75,22 @@ void imprimeLista(Lista *l){
 
     printf("pe\n");
 }
+
+Lista** criaHash(int nPag){
+    int i;
+    Lista **hash = (Lista**)malloc(sizeof(Lista*)*nPag);
+
+    for (i = 0; i < nPag; i++){
+        hash[i] = criaLista();
+    }
+
+    return hash;
+}
+
+void destroiHash(Lista **hash, int nPag){
+    int i;
+    for (i = 0; i < nPag; i++){
+        destroiLista(hash[i]);    
+    }
+    free(hash);
+}

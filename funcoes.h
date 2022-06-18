@@ -5,15 +5,11 @@
 #ifndef _H_FUNCOES
 #define _H_FUNCOES
 
-typedef struct TFrame{
-    int page;
-    int r_b;
-}Frame;
 
-
-FILE* abrirArquivo(char* nome);
+FILE* abrirArquivo(char* nome, char *tipo);
 int fecharArquivo(FILE *arquivo);
 int enderecoPagina(int tamPag);
 const char* hextobinary(char* addr);
+void salvarDebug(FILE *f, int s, int tamPag, int nPag, const char *bin,  long int binint, unsigned addr, char *addr2, unsigned addrR);
 
 #endif

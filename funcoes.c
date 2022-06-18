@@ -1,8 +1,8 @@
 #include "funcoes.h"
 
-FILE* abrirArquivo(char* nome){
+FILE* abrirArquivo(char* nome, char *tipo){
     FILE *arquivo = NULL;
-    arquivo = fopen(nome, "r");
+    arquivo = fopen(nome, tipo);
 
     if(arquivo != NULL){
         return arquivo;
@@ -100,4 +100,16 @@ const char* hextobinary(char* addr){
     /*printf("valor hex: %s\n", addr);
     printf("%s\n",bin);*/
     return bin;
+}
+
+void salvarDebug(FILE *f, int s, int tamPag, int nPag, const char *bin,  long int binint, unsigned addr, char *addr2, unsigned addrR){
+    fprintf(f, "\n");
+    fprintf(f, "s: %d\n", s);
+    fprintf(f, "tampag: %d\n",tamPag);
+    fprintf(f, "npag: %d\n", nPag); 
+    fprintf(f, "endereco em bin: %s\n", bin);
+    fprintf(f, "endereco Real: %d\n", addrR);
+    fprintf(f, "endereco HEX: %x\n", addr);
+    fprintf(f, "addr int: %lu\naddr: %s\n", binint, addr2);
+    fprintf(f, "\n");  
 }

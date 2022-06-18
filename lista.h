@@ -32,5 +32,7 @@ NoL* removeListaInicio(Lista *l);
 int ehVazia(Lista *l);
 void destroiLista(Lista *l);
 void imprimeLista(Lista *l);
+Lista** criaHash(int nPag);
+void destroiHash(Lista **hash, int nPag);
 
 #endif
