@@ -1,6 +1,9 @@
 #include "funcoes.h"
 #include "fila.h"
 #include "lista.h"
+#include "lru.h"
+
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,6 +27,7 @@ int main(int argc, char *argv[]){
     int nPagW = 0;
     int pFault = 0;
     int s;
+    int i = 0;
     char addr[TAMANHO+1];
     char rw;
     s = enderecoPagina(tamPag);
@@ -36,6 +40,11 @@ int main(int argc, char *argv[]){
         long int binint = strtoll(bin,NULL,2);
         long int page = binint >> s;
 
+        NoF *n;
+        n = criaNoF(bin);
+        insereFila(F,n);
+        i++;
+        
         /*printfs para verificar o funcionamento do código*/
         /*Quando argc == 6 significa que ha 5 parametros, ou seja, argv[6] e == debug*/
         if((argc == 6) && (strcmp(argv[5], "debug") == 0)){
@@ -45,6 +54,7 @@ int main(int argc, char *argv[]){
             printf("endereco em bin: %s\n",bin);
             printf("addr int: %lu\naddr: %s\n", binint, addr);
             printf("linha na tabela de pagina fisica %lu\n\n",page);
+            imprimeFila(F);
         }
         
         /*Define o numero de paginas lidas e escritas*/
@@ -52,11 +62,12 @@ int main(int argc, char *argv[]){
             nPagR++;
         if(rw == 'W')
             nPagW++;
-        
+    }
+    int j = 0;
+    while (j < i){
         if (argc >= 5){
             if(strcmp(argv[1], "lru") == 0){
-                /*Logica lru
-                printf("lru!\n");*/
+                j++;
             }else if(strcmp(argv[1], "nru") == 0){
                 /*Logica nru
                 printf("nru!\n");*/
@@ -64,9 +75,7 @@ int main(int argc, char *argv[]){
                 /*Logica segunda_chance
                 printf("segunda_chance!\n");
                 segunda_chance();*/ 
-                /*NoF *n;
-                n = criaNoF(bin);
-                insereFila(F,n);
+                /*
                 imprimeFila(F);
                 verificaFila(F,bin);*/
             }else{
@@ -74,6 +83,7 @@ int main(int argc, char *argv[]){
             }
         }else{
              printf("Falta argumentos\n");
+        
         }
     }
     

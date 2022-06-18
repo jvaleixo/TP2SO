@@ -7,5 +7,9 @@
 #define _H_LRU
 
 lru();
-
+void insereFrame(LFrame *fr, Page *p);
+LFrame* criaFrame();
+Page* criaPage(const char *addr, int timer);
+typedef struct LFrame;
+typedef struct LPage;
 #endif
