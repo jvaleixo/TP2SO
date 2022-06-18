@@ -3,13 +3,13 @@
 #include "lista.h"
 #include "lru.h"
 
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+
 int main(int argc, char *argv[]){
+
     /*
         argv[1] = tipo de paginação;
         argv[2] = nome do arquivo;
@@ -27,11 +27,13 @@ int main(int argc, char *argv[]){
     int nPagW = 0;
     int pFault = 0;
     int s;
-    int i = 0;
+    int timer = 0;
     char addr[TAMANHO+1];
     char rw;
     s = enderecoPagina(tamPag);
     arquivo = abrirArquivo(argv[2]);
+    LTable *T;
+    T = criaTable();
     Fila *F;
     F = criaFila();
     while (fscanf(arquivo, "%s %c", addr, &rw) != EOF){
@@ -40,11 +42,8 @@ int main(int argc, char *argv[]){
         long int binint = strtoll(bin,NULL,2);
         long int page = binint >> s;
 
-        NoF *n;
-        n = criaNoF(bin);
+        NoF *n = criaNoF(bin);
         insereFila(F,n);
-        i++;
-        
         /*printfs para verificar o funcionamento do código*/
         /*Quando argc == 6 significa que ha 5 parametros, ou seja, argv[6] e == debug*/
         if((argc == 6) && (strcmp(argv[5], "debug") == 0)){
@@ -64,13 +63,18 @@ int main(int argc, char *argv[]){
             nPagW++;
     }
     int j = 0;
-    while (j < i){
+    while (j < nPag){
         if (argc >= 5){
             if(strcmp(argv[1], "lru") == 0){
+                if(strcmp(argv[5], "debug") == 0){
+                    lru(nPag,F,timer);
+                    imprimeTable(T);
+                    j++; 
+                }
+                lru(nPag,T,timer);
                 j++;
             }else if(strcmp(argv[1], "nru") == 0){
-                /*Logica nru
-                printf("nru!\n");*/
+                printf("nru!");
             }else if(strcmp(argv[1], "segunda_chance") == 0){
                 /*Logica segunda_chance
                 printf("segunda_chance!\n");
@@ -98,4 +102,6 @@ int main(int argc, char *argv[]){
     printf("Paginas escritas: %d\n", nPagW);
     printf("Page faults: %d\n",pFault);
     return 1;
+
+
 }
