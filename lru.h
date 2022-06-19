@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include "fila.h"
 
 #ifndef _H_LRU
 #define _H_LRU
@@ -10,23 +11,25 @@
 typedef struct Page LPage;
 typedef struct Table LTable;
 
-typedef struct LPage{
+typedef struct Page{
     int pagina;
     const char* addr;
     long int timer;
+    int ref;
     LPage* prox;
 };
 
-typedef struct LTable{
+typedef struct Table{
     int nPag;
-    int ref;
     LPage* st;
     LPage* end;
 };
-
-void lru(int nPag, Fila *F, int timer);
-void verificaPage(LTable *T, LPage *p)
-void insereTable(LTable *T, LPage *p);
+int lru(int nPag, Fila *F, LTable *T, int timer);
+int verificaPage(LTable* T, LPage *p, int tamanho);
+LPage* procuraLRU(LTable *T);
+int updateTable(LTable *T, LPage *p,int tamanho,int timer);
+void imprimeTable(LTable *T);
+void insereTable(LTable *T, LPage *p, int tamanho,int timer);
 LTable* criaTable();
 LPage* criaPage(const char *addr, int timer);
 

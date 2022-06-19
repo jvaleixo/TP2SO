@@ -32,10 +32,10 @@ int main(int argc, char *argv[]){
     char rw;
     s = enderecoPagina(tamPag);
     arquivo = abrirArquivo(argv[2]);
-    LTable *T;
-    T = criaTable();
     Fila *F;
     F = criaFila();
+    LTable *T;
+    T = criaTable();
     while (fscanf(arquivo, "%s %c", addr, &rw) != EOF){
         
         const char *bin = hextobinary(addr);
@@ -54,6 +54,7 @@ int main(int argc, char *argv[]){
             printf("addr int: %lu\naddr: %s\n", binint, addr);
             printf("linha na tabela de pagina fisica %lu\n\n",page);
             imprimeFila(F);
+            /*imprimeTable(T);*/
         }
         
         /*Define o numero de paginas lidas e escritas*/
@@ -61,18 +62,10 @@ int main(int argc, char *argv[]){
             nPagR++;
         if(rw == 'W')
             nPagW++;
-    }
-    int j = 0;
-    while (j < nPag){
         if (argc >= 5){
             if(strcmp(argv[1], "lru") == 0){
-                if(strcmp(argv[5], "debug") == 0){
-                    lru(nPag,F,timer);
-                    imprimeTable(T);
-                    j++; 
-                }
-                lru(nPag,T,timer);
-                j++;
+                pFault = lru(nPag,F,T,timer);
+                /*imprimeTable(T);*/
             }else if(strcmp(argv[1], "nru") == 0){
                 printf("nru!");
             }else if(strcmp(argv[1], "segunda_chance") == 0){
@@ -90,6 +83,33 @@ int main(int argc, char *argv[]){
         
         }
     }
+    /*int j = 0;
+    while (j < nPag){
+        if (argc >= 5){
+            if(strcmp(argv[1], "lru") == 0 ){
+                lru(nPag,F,timer);
+                imprimeTable(T);
+                j++;
+            }else if (strcmp(argv[1], "lru") == 0){
+                lru(nPag,F,timer);
+                j++; 
+            }else if(strcmp(argv[1], "nru") == 0){
+                printf("nru!");
+            }else if(strcmp(argv[1], "segunda_chance") == 0){
+                /*Logica segunda_chance
+                printf("segunda_chance!\n");
+                segunda_chance();*/ 
+                /*
+                imprimeFila(F);
+                verificaFila(F,bin);
+            }else{
+                printf("digite um comando valido!\n");
+            }
+        }else{
+             printf("Falta argumentos\n");
+        
+        }*/
+    
     
     fecharArquivo(arquivo);
 
@@ -103,5 +123,5 @@ int main(int argc, char *argv[]){
     printf("Page faults: %d\n",pFault);
     return 1;
 
-
 }
+
