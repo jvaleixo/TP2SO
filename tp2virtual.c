@@ -25,9 +25,9 @@ int main(int argc, char *argv[]){
     int nPag = tamMem/tamPag;
     int nPagR = 0;
     int nPagW = 0;
-    int pFault = 0;
+    long int pFault = 0;
     int s;
-    int timer = 0;
+    int timer = 1;
     char addr[TAMANHO+1];
     char rw;
     s = enderecoPagina(tamPag);
@@ -36,6 +36,8 @@ int main(int argc, char *argv[]){
     F = criaFila();
     LTable *T;
     T = criaTable();
+    T = criaMemoria(T, nPag);
+    imprimeTable(T);
     while (fscanf(arquivo, "%s %c", addr, &rw) != EOF){
         
         const char *bin = hextobinary(addr);
@@ -62,37 +64,11 @@ int main(int argc, char *argv[]){
             nPagR++;
         if(rw == 'W')
             nPagW++;
-        if (argc >= 5){
+
+        /*if (argc >= 5){
             if(strcmp(argv[1], "lru") == 0){
                 pFault = lru(nPag,F,T,timer);
-                /*imprimeTable(T);*/
-            }else if(strcmp(argv[1], "nru") == 0){
-                printf("nru!");
-            }else if(strcmp(argv[1], "segunda_chance") == 0){
-                /*Logica segunda_chance
-                printf("segunda_chance!\n");
-                segunda_chance();*/ 
-                /*
-                imprimeFila(F);
-                verificaFila(F,bin);*/
-            }else{
-                printf("digite um comando valido!\n");
-            }
-        }else{
-             printf("Falta argumentos\n");
-        
-        }
-    }
-    /*int j = 0;
-    while (j < nPag){
-        if (argc >= 5){
-            if(strcmp(argv[1], "lru") == 0 ){
-                lru(nPag,F,timer);
-                imprimeTable(T);
-                j++;
-            }else if (strcmp(argv[1], "lru") == 0){
-                lru(nPag,F,timer);
-                j++; 
+                /*imprimeTable(T);
             }else if(strcmp(argv[1], "nru") == 0){
                 printf("nru!");
             }else if(strcmp(argv[1], "segunda_chance") == 0){
@@ -109,8 +85,23 @@ int main(int argc, char *argv[]){
              printf("Falta argumentos\n");
         
         }*/
+    }
+    if (argc >= 5){
+        if(strcmp(argv[1], "lru") == 0 ){
+            pFault = lru(F,T,timer);
+        }else if(strcmp(argv[1], "nru") == 0){
+                printf("nru!");
+        }else if(strcmp(argv[1], "segunda_chance") == 0){
+                /*Logica segunda_chance
+                printf("segunda_chance!\n");
+                segunda_chance();*/ 
+        }else{
+                printf("digite um comando valido!\n");
+        }
+    }
     
-    
+    /*imprimeTable(T);*/
+
     fecharArquivo(arquivo);
 
     printf("Executando o simulador...\n");
@@ -120,7 +111,8 @@ int main(int argc, char *argv[]){
     printf("Tecnica de reposição: %s\n", argv[1]);
     printf("Paginas lidas: %d\n", nPagR);
     printf("Paginas escritas: %d\n", nPagW);
-    printf("Page faults: %d\n",pFault);
+    printf("Page faults: %lu\n",pFault);
+    
     return 1;
 
 }
