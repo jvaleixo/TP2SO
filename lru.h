@@ -12,7 +12,6 @@ typedef struct Page LPage;
 typedef struct Table LTable;
 
 struct Page{
-    int pagina;
     const char* addr;
     long int timer;
     int ref;
@@ -25,14 +24,16 @@ struct Table{
     LPage* end;
 };
 
-int lru(int nPag, Fila *F, LTable *T, int timer);
+int lru(Fila *F, LTable *T, int timer);
 int verificaPage(LTable* T, LPage *p);
 LPage* procuraLRU(LTable *T);
-int updateTable(LTable *T, LPage *p,int tamanho,int timer);
+void trocaLRU(LTable *T, LPage *p, LPage *LRU);
+int updateTable(LTable *T, LPage *p);
 void imprimeTable(LTable *T);
+void imprimePage(LPage *p);
 void insereTable(LTable *T, LPage *p);
 LTable* criaTable();
-void criaMemoria(LTable *T, int Tam, const char *addr, int timer);
+LTable* criaMemoria(LTable *T, int Tam);
 LPage* criaPage(const char *addr, int timer);
 
 #endif

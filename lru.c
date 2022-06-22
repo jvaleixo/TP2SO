@@ -3,77 +3,41 @@
 #include "fila.h"
 
 #include <string.h>
-int lru(int nPag, Fila *F, LTable *T, int timer){
+int lru(Fila *F, LTable *T, int timer){
     
-    int j, pgFault;
-    criaMemoria(T, nPag, "0", 0);
-
-    for(j = 0; j< nPag; j++){
-        LPage *p;
-        NoF *aux;
-        char *bin;
-        aux = F->ini->prox;
+    int pgFault;
+    LPage *p;
+    NoF *aux;
+    const char *bin = NULL;
+    aux = F->ini->prox;
+    while(aux != NULL){
         bin = strdup(aux->addr);
         p = criaPage(bin,timer);
-        if(T->nPag == 0){
-            insereTable(T,p);
-            timer++;
-        } else if (T->nPag > 0){
-            pgFault = updateTable(T,p,nPag,timer);
-            timer++;
-        }
-        free(bin);
+        pgFault = updateTable(T,p);
+        timer++;
+        aux = aux->prox;
     }
     return pgFault;
 }
-
-LPage* procuraLRU(LTable *T){
-    int min = INT_MAX;
-    LPage *LRU = NULL;
-    LPage *p = T->st->prox;
-    /*aqui*/
-    while(p != NULL){
-        if(p->timer < min){
-            min = p->timer;
-            LRU = p;
-            p = p->prox;
-        }
-    }
-    return LRU;
-}
-
-int updateTable(LTable *T, LPage *p,int tamanho,int timer){
+int updateTable(LTable *T, LPage *p){
     int aux2;
-    /*aqui*/
     int pgFault = 0;
     aux2 = verificaPage(T,p);
-    /*printf("%d\n",aux2);*/
     if(aux2 == 0){
         LPage *x = procuraLRU(T);
-        insereTable(T,x,tamanho, timer);
+        trocaLRU(T,p,x);
         pgFault++;
+    } else if(strcmp(T->st->prox->addr, "0") == 0){
+        insereTable(T,p);
     }
     return pgFault;
 }
-
-/*int verificaPage(Fila *F){
-    NoF *aux3;
-    aux3 = F->ini->prox;
-    while(aux3 != F->end->prox){
-        if(aux3->ref == 1){ pagina referenciada na tabela
-            return 1;
-        }else{
-            return 0; 
-        }
-        aux3 = aux3->prox;
-    }
-}*/
-
 int verificaPage(LTable* T, LPage *p){
     LPage *aux3;
-    aux3 = T->st;
-    while(aux3 != T->end){
+    aux3 = T->st->prox;
+    while(aux3 != NULL){
         if(strcmp(aux3->addr, p->addr) == 0){ /* pagina referenciada na tabela*/
+            printf("alo\n");
             return 1;
         }else{
             return 0; 
@@ -82,62 +46,46 @@ int verificaPage(LTable* T, LPage *p){
     }
     return 0;
 } 
-
-void insereTable(LTable *T, LPage *p){
-    LPage *aux4,*aux5;
-    aux4 = T->st;
-    aux5 = T->end;
-    if(T->nPag == 0 && T->st == T->end && aux4->ref == 0){
-        aux4->prox = p;
-        T->end = p;
-        T->nPag++;
-        aux4->ref = 1;
-        aux4->timer +=1;
-    }else{
-        aux5->prox = p;
-        aux5 = aux5->prox;
-        aux5->prox = NULL;
-        T->nPag++;
-        aux5->ref = 1;
-        aux5->timer += 1;
-    }
-}
-
-/*errado
-void insereTable(LTable *T, LPage *p, int tamanho,int timer){
-    int j = 0;
-    LPage *aux4,*aux5;
-    aux4 = T->st;
-    aux5 = T->end;
-    if(T->nPag == 0 && T->st == T->end && aux4->ref == 0){
-        aux4->prox = p;
-        T->end = p;
-        T->nPag++;
-        aux4->ref = 1;
-        aux4->pagina = j;
-        aux4->timer = timer+1;
-    }else{
-        while(j < tamanho){
-            if(aux4->ref ==  0){
-                if(T->st == T->end){
-                    aux4->prox = p;
-                    aux4->prox->prox = NULL;
-                    T->nPag++;
-                    aux4->ref = 1;
-                    aux4->pagina = j;
-                    aux4->timer = timer+1;
-                } else{ 
-                    aux5->prox = p;
-                    aux4->prox->prox = NULL;
-                    aux4->pagina = j;
-                    aux4->ref = 1;
-                }
-            }
-            j++;
+LPage* procuraLRU(LTable *T){
+    int min = INT_MAX;
+    LPage *LRU;
+    LPage *p;
+    p = T->st->prox;
+    while(p != NULL){
+        if(p->timer < min){
+            min = p->timer;
+            LRU = p;
+            p = p->prox;
+        } else {
+            p = p->prox;
         }
     }
+    return LRU;
 }
-*/
+void trocaLRU(LTable *T, LPage *p, LPage *LRU){
+    LPage *aux,*aux2;
+    aux = T->st->prox;
+    aux2 = T->end->prox;
+    while(aux != aux2){
+        if(strcmp(aux->addr, p->addr) == 0){ /* encontra a pagina LRU */
+            aux->addr = LRU->addr;
+            aux->timer = LRU->timer+1;
+            aux->ref = 1;
+            break;
+        }
+        aux = aux->prox;
+    }
+}
+void insereTable(LTable *T, LPage *p){
+    if(T->st == T->end){
+        T->st->prox = p;
+        T->end = p;
+    }else{
+        T->end->prox = p;
+        T->end = T->end->prox;
+    }
+}
+
 
 LTable* criaTable(){
     LTable *T = (LTable*)malloc(sizeof(LTable));
@@ -148,11 +96,15 @@ LTable* criaTable(){
     return T;
 }
 
-void criaMemoria(LTable *T, int Tam, const char *addr, int timer){
-    for (int i = 0; i < tam; i++){
-        Lpage *p = criaPage(addr, timer);
-        insereTable(T, p);
+LTable* criaMemoria(LTable *T, int Tam){
+    
+    int i;
+    LPage *p;
+    for (i = 0; i < Tam; i++){
+        p = criaPage("0", 0);
+        insereTable(T,p);
     }
+    return T;
 }
 
 LPage* criaPage(const char *addr, int timer){
@@ -160,16 +112,25 @@ LPage* criaPage(const char *addr, int timer){
     p->addr = strdup(addr);
     p->timer = timer;
     p->prox = NULL;
-    p->pagina = 0;
     p->ref = 0;
     return p;
 }
 
 void imprimeTable(LTable *T){
-    LPage *p = T->st->prox;
+    int i;
+    i = 0;
+    LPage *p; 
+    p = T->st->prox;
     printf("\ntabela:\n");
     while(p != NULL){
-        printf("%s \n", p->addr);
+        printf("addr pos %d: %s\n",i,p->addr);
+        printf("timer pos %d: %lu\n",i,p->timer);
         p = p->prox;
+        i++;
     }    
+}
+
+void imprimePage(LPage *p){
+    printf("addr: %s\n",p->addr);
+    printf("timer: %lu\n",p->timer);
 }
