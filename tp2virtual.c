@@ -25,6 +25,7 @@ int main(int argc, char *argv[]){
     int nPag = tamMem/tamPag;
     int nPagR = 0;
     int nPagW = 0;
+    int nPagT = 0;
     long int pFault = 0;
     int s;
     int timer = 1;
@@ -37,7 +38,7 @@ int main(int argc, char *argv[]){
     LTable *T;
     T = criaTable();
     T = criaMemoria(T, nPag);
-    imprimeTable(T);
+    
     while (fscanf(arquivo, "%s %c", addr, &rw) != EOF){
         
         const char *bin = hextobinary(addr);
@@ -65,6 +66,7 @@ int main(int argc, char *argv[]){
         if(rw == 'W')
             nPagW++;
 
+        nPagT = nPagW+nPagR;
         /*if (argc >= 5){
             if(strcmp(argv[1], "lru") == 0){
                 pFault = lru(nPag,F,T,timer);
@@ -100,7 +102,7 @@ int main(int argc, char *argv[]){
         }
     }
     
-    /*imprimeTable(T);*/
+    imprimeTable(T);
 
     fecharArquivo(arquivo);
 

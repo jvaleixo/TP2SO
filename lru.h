@@ -27,8 +27,9 @@ struct Table{
 int lru(Fila *F, LTable *T, int timer);
 int verificaPage(LTable* T, LPage *p);
 LPage* procuraLRU(LTable *T);
-void trocaLRU(LTable *T, LPage *p, LPage *LRU);
-int updateTable(LTable *T, LPage *p);
+void trocaLRU(Fila *F,LTable *T, LPage *p, LPage *LRU);
+void trocaPage(Fila *F, LTable *T, LPage *p);
+int updateTable(Fila *F,LTable *T, LPage *p);
 void imprimeTable(LTable *T);
 void imprimePage(LPage *p);
 void insereTable(LTable *T, LPage *p);
