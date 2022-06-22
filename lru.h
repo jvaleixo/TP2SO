@@ -24,12 +24,12 @@ struct Table{
     LPage* end;
 };
 
-int lru(Fila *F, LTable *T, int timer);
+int lru(Fila *F, LTable *T, int timer, int pgFault);
 int verificaPage(LTable* T, LPage *p);
 LPage* procuraLRU(LTable *T);
 void trocaLRU(Fila *F,LTable *T, LPage *p, LPage *LRU);
 void trocaPage(Fila *F, LTable *T, LPage *p);
-int updateTable(Fila *F,LTable *T, LPage *p);
+int updateTable(Fila *F,LTable *T, LPage *p,int pgFault);
 void imprimeTable(LTable *T);
 void imprimePage(LPage *p);
 void insereTable(LTable *T, LPage *p);

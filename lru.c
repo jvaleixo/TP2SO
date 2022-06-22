@@ -3,9 +3,8 @@
 #include "fila.h"
 
 #include <string.h>
-int lru(Fila *F, LTable *T, int timer){
+int lru(Fila *F, LTable *T, int timer, int pgFault){
     
-    int pgFault;
     LPage *p;
     NoF *aux;
     const char *bin = NULL;
@@ -18,18 +17,17 @@ int lru(Fila *F, LTable *T, int timer){
         /*printf("timer: %d\n",timer);*/
         bin = strdup(aux->addr);
         p = criaPage(bin,timer);
-        pgFault = updateTable(F,T,p);
+        pgFault = updateTable(F,T,p,pgFault);
         timer++;
         aux = aux->prox;
     }
     /*imprimeTable(T);*/
     return pgFault;
 }
-int updateTable(Fila *F,LTable *T, LPage *p){
+int updateTable(Fila *F,LTable *T, LPage *p,int pgFault){
     LPage *aux;
-    int aux2,pgFault;
+    int aux2;
     aux2 = -1;
-    pgFault = 0;
     aux = T->st->prox;
     aux2 = verificaPage(T,p);
     if(strcmp(aux->addr, "0") == 0){
@@ -38,9 +36,9 @@ int updateTable(Fila *F,LTable *T, LPage *p){
         LPage *x = criaPage("0",0);
         x = procuraLRU(T);
         trocaLRU(F,T,p,x);
-        pgFault++;
+        /*pgFault++;*/
     }
-      return pgFault;  
+    return pgFault;  
 }
 int verificaPage(LTable* T, LPage *p){
     LPage *aux3;
